@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Register for TechCon 2024</title>
+    <style>
+        :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:#111;background:#f7f9fb}
+        body{margin:0;display:flex;min-height:100vh;flex-direction:column}
+        header,footer{background:#0b74de;color:#fff;padding:1rem}
+        header h1{margin:0;font-size:1.25rem}
+        nav{margin-top:.5rem}
+        nav a{color:#e8f4ff;text-decoration:none;margin-right:1rem}
+        main{flex:1;padding:2rem;max-width:720px;margin:0 auto}
+        form{background:#fff;padding:1.25rem;border-radius:8px;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+        .form-row{display:flex;flex-direction:column;margin-bottom:.75rem}
+        label{font-weight:600;margin-bottom:.25rem}
+        input[type="text"],input[type="email"],input[type="password"]{padding:.5rem;border:1px solid #cbd5e1;border-radius:6px;font-size:1rem}
+        .small{font-size:.875rem;color:#555;margin-top:.25rem}
+        .actions{display:flex;align-items:center;justify-content:space-between;margin-top:1rem}
+        .terms{display:flex;align-items:center;gap:.5rem}
+        button{background:#0b74de;color:#fff;border:none;padding:.6rem .9rem;border-radius:6px;font-weight:600;cursor:pointer}
+        .error{color:#c53030;font-size:.9rem;margin-top:.35rem}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Register for TechCon 2024</h1>
+        <nav aria-label="Main navigation">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <form id="register-form" action="#" method="post" novalidate>
+            <p class="small">Please provide the information below to create your TechCon 2024 attendee account.</p>
+
+            <div class="form-row">
+                <label for="full-name">Full name</label>
+                <input id="full-name" name="fullName" type="text" autocomplete="name" required aria-required="true" placeholder="Your full name" />
+            </div>
+
+            <div class="form-row">
+                <label for="email">Email address</label>
+                <input id="email" name="email" type="email" autocomplete="email" required aria-required="true" placeholder="name@example.com" />
+            </div>
+
+            <fieldset style="border:0;padding:0;margin:0;">
+                <legend class="small" style="font-weight:700;margin-bottom:.5rem;">Account password</legend>
+
+                <div class="form-row">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" minlength="8" required aria-describedby="password-help" aria-required="true" placeholder="At least 8 characters" />
+                    <div id="password-help" class="small">Use at least 8 characters. Consider including letters, numbers, and symbols.</div>
+                </div>
+
+                <div class="form-row">
+                    <label for="confirm-password">Confirm password</label>
+                    <input id="confirm-password" name="confirmPassword" type="password" required aria-required="true" placeholder="Repeat your password" />
+                    <div id="pw-error" class="error" role="alert" aria-live="polite" hidden></div>
+                </div>
+            </fieldset>
+
+            <div class="form-row">
+                <label class="terms">
+                    <input id="terms" name="terms" type="checkbox" required aria-required="true" />
+                    <span>I agree to the <a href="terms.html">terms and conditions</a>.</span>
+                </label>
+            </div>
+
+            <div class="actions">
+                <button type="submit">Register Now</button>
+                <small class="small">Already have an account? <a href="login.html">Sign in</a></small>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+        <div>© 2024 TechCon. All rights reserved.</div>
+    </footer>
+
+    <script>
+        (function () {
+            const form = document.getElementById('register-form');
+            const pw = document.getElementById('password');
+            const confirmPw = document.getElementById('confirm-password');
+            const pwError = document.getElementById('pw-error');
+
+            function checkPasswordMatch() {
+                if (!confirmPw.value) {
+                    pwError.hidden = true;
+                    confirmPw.setCustomValidity('');
+                    return;
+                }
+                if (pw.value !== confirmPw.value) {
+                    pwError.textContent = 'Passwords do not match.';
+                    pwError.hidden = false;
+                    confirmPw.setCustomValidity('Passwords do not match');
+                } else {
+                    pwError.hidden = true;
+                    confirmPw.setCustomValidity('');
+                }
+            }
+
+            pw.addEventListener('input', checkPasswordMatch);
+            confirmPw.addEventListener('input', checkPasswordMatch);
+
+            form.addEventListener('submit', function (e) {
+                checkPasswordMatch();
+                if (!form.checkValidity()) {
+                    e.preventDefault();
+                    form.querySelector('input:invalid')?.focus();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
